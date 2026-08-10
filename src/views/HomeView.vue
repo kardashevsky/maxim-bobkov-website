@@ -2,6 +2,8 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import { config } from '@/config'
+
 import cvIcon from '@/assets/icons/cv.svg'
 import telegramIcon from '@/assets/icons/telegram.svg'
 import mailIcon from '@/assets/icons/mail.svg'
@@ -20,11 +22,7 @@ interface Project {
 
 const { t, locale } = useI18n()
 
-const cvUrl = computed(() =>
-  locale.value === 'ru'
-    ? `https://drive.google.com/file/d/1jJLOjlQ10GasfUijsvy_foj-itHBExct/view`
-    : 'https://drive.google.com/file/d/1Yih6H43Kssl3RMjl9SO4dS8JjXfGWr-W/view',
-)
+const cvUrl = computed(() => (locale.value === 'ru' ? config.links.cv.ru : config.links.cv.en))
 
 const projects: Project[] = [
   {
@@ -84,7 +82,7 @@ function scrollToTop(): void {
 
             <a
               class="button"
-              href="https://t.me/maksimskt"
+              :href="config.links.telegram"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -92,7 +90,7 @@ function scrollToTop(): void {
               {{ t('contacts.telegram') }}
             </a>
 
-            <a class="button" href="mailto:maksim.you11@gmail.com">
+            <a class="button" :href="config.links.email">
               <img class="button__icon" :src="mailIcon" alt="" aria-hidden="true" />
               {{ t('contacts.mail') }}
             </a>

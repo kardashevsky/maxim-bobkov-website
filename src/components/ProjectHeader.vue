@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
+
+import { config } from '@/config'
 
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
@@ -8,9 +11,9 @@ import cvIcon from '@/assets/icons/cv.svg'
 import telegramIcon from '@/assets/icons/telegram.svg'
 import mailIcon from '@/assets/icons/mail.svg'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
-const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
+const cvUrl = computed(() => (locale.value === 'ru' ? config.links.cv.ru : config.links.cv.en))
 </script>
 
 <template>
@@ -30,7 +33,7 @@ const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
 
       <a
         class="project-header__contact"
-        href="https://t.me/maksimskt"
+        :href="config.links.telegram"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -39,7 +42,7 @@ const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
         {{ t('contacts.telegram') }}
       </a>
 
-      <a class="project-header__contact" href="mailto:maksim.you11@gmail.com">
+      <a class="project-header__contact" :href="config.links.email">
         <img class="project-header__contact-icon" :src="mailIcon" alt="" aria-hidden="true" />
 
         {{ t('contacts.mail') }}
