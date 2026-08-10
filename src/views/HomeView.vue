@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import cvIcon from '@/assets/icons/cv.svg'
@@ -17,9 +18,13 @@ interface Project {
   image: string
 }
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
-const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
+const cvUrl = computed(() =>
+  locale.value === 'ru'
+    ? `https://drive.google.com/file/d/1jJLOjlQ10GasfUijsvy_foj-itHBExct/view`
+    : 'https://drive.google.com/file/d/1Yih6H43Kssl3RMjl9SO4dS8JjXfGWr-W/view',
+)
 
 const projects: Project[] = [
   {
