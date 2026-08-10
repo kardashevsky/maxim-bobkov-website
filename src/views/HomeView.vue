@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 
+import cvIcon from '@/assets/icons/cv.svg'
+import telegramIcon from '@/assets/icons/telegram.svg'
+import mailIcon from '@/assets/icons/mail.svg'
+
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import ProjectCard from '@/components/ProjectCard.vue'
 
@@ -69,7 +73,7 @@ function scrollToTop(): void {
 
           <nav class="profile__contacts" :aria-label="t('accessibility.contacts')">
             <a class="button" :href="cvUrl" target="_blank" rel="noopener noreferrer">
-              <span aria-hidden="true">▣</span>
+              <img class="button__icon" :src="cvIcon" alt="" aria-hidden="true" />
               {{ t('contacts.cv') }}
             </a>
 
@@ -79,12 +83,12 @@ function scrollToTop(): void {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span aria-hidden="true">➤</span>
+              <img class="button__icon" :src="telegramIcon" alt="" aria-hidden="true" />
               {{ t('contacts.telegram') }}
             </a>
 
             <a class="button" href="mailto:maksim.you11@gmail.com">
-              <span aria-hidden="true">✉</span>
+              <img class="button__icon" :src="mailIcon" alt="" aria-hidden="true" />
               {{ t('contacts.mail') }}
             </a>
           </nav>
@@ -93,7 +97,7 @@ function scrollToTop(): void {
             {{ t('home.mobileNotice') }}
           </p>
 
-          <LanguageSwitcher />
+          <LanguageSwitcher class="profile__language" />
         </div>
       </aside>
 
@@ -116,3 +120,38 @@ function scrollToTop(): void {
     </button>
   </main>
 </template>
+
+<style scoped>
+.profile__language {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 30px;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .mobile-message {
+    display: block;
+    max-width: 620px;
+    margin: 88px auto 0;
+
+    color: var(--accent);
+
+    text-align: center;
+
+    font-size: clamp(22px, 6.4vw, 34px);
+    font-weight: 500;
+    line-height: 1.26;
+  }
+
+  .profile__language {
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  :deep(.language-switcher) {
+    justify-content: center;
+  }
+}
+</style>

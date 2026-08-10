@@ -10,15 +10,14 @@ const { locale } = useI18n()
 
 const isRussian = computed(() => locale.value === 'ru')
 
-function setLocale(value: 'ru' | 'en'): void {
+function setLocale(value: 'ru' | 'en') {
   locale.value = value
   localStorage.setItem('locale', value)
-  document.documentElement.lang = value
 }
 </script>
 
 <template>
-  <div class="language-switcher" role="group" aria-label="Выбор языка">
+  <div class="language-switcher">
     <button
       class="language-switcher__button"
       :class="{ 'language-switcher__button--active': isRussian }"
@@ -57,7 +56,6 @@ function setLocale(value: 'ru' | 'en'): void {
 .language-switcher {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 4px;
 }
 
@@ -67,37 +65,36 @@ function setLocale(value: 'ru' | 'en'): void {
   justify-content: center;
   gap: 4px;
 
-  width: 66px;
   height: 32px;
   padding: 10px;
 
   border: 0;
   border-radius: 10px;
 
-  background: transparent;
-  color: #4a4a4a;
+  /* Неактивная кнопка */
+  background: rgba(218, 226, 218, 0.5);
+  color: rgba(74, 74, 74, 0.5);
 
-  font-family: 'Gilroy', sans-serif;
   font-size: 16px;
   font-weight: 500;
-  line-height: 110%;
+  line-height: 1.1;
 
   cursor: pointer;
 }
 
+/* Активная кнопка */
 .language-switcher__button--active {
   background: #dae2da;
+  color: #4a4a4a;
 }
 
 .language-switcher__flag {
-  display: block;
   width: 12px;
   height: 12px;
   flex-shrink: 0;
 }
 
 .language-switcher__arrow {
-  display: block;
   width: 5px;
   height: 19px;
   flex-shrink: 0;
