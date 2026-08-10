@@ -1,8 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
+
 import HomeView from '@/views/HomeView.vue'
+import ProjectView from '@/views/ProjectView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
 
   routes: [
     {
@@ -10,12 +12,17 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
+    {
+      path: '/projects/:slug',
+      name: 'project',
+      component: ProjectView,
+      props: true,
+    },
   ],
 
   scrollBehavior() {
     return {
       top: 0,
-      behavior: 'smooth',
     }
   },
 })

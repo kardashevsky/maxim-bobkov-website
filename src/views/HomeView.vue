@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+import ProjectCard from '@/components/ProjectCard.vue'
 
 interface Project {
   id: number
+  slug: string
   titleKey: string
   descriptionKey?: string
   altKey: string
@@ -12,9 +15,12 @@ interface Project {
 
 const { t } = useI18n()
 
+const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
+
 const projects: Project[] = [
   {
     id: 1,
+    slug: 'glaspro',
     titleKey: 'projects.glaspro.title',
     descriptionKey: 'projects.glaspro.description',
     altKey: 'projects.glaspro.alt',
@@ -22,6 +28,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
+    slug: 'numi',
     titleKey: 'projects.numi.title',
     descriptionKey: 'projects.numi.description',
     altKey: 'projects.numi.alt',
@@ -29,6 +36,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    slug: 'graphics',
     titleKey: 'projects.graphics.title',
     altKey: 'projects.graphics.alt',
     image: new URL('../assets/project-graphics.webp', import.meta.url).href,
@@ -60,7 +68,7 @@ function scrollToTop(): void {
           </div>
 
           <nav class="profile__contacts" :aria-label="t('accessibility.contacts')">
-            <a class="button" href="/maxim-bobkov-cv.pdf" target="_blank" rel="noopener noreferrer">
+            <a class="button" :href="cvUrl" target="_blank" rel="noopener noreferrer">
               <span aria-hidden="true">▣</span>
               {{ t('contacts.cv') }}
             </a>
@@ -90,25 +98,15 @@ function scrollToTop(): void {
       </aside>
 
       <section class="projects" :aria-label="t('accessibility.projects')">
-        <article v-for="project in projects" :key="project.id" class="project-card">
-          <div class="project-card__image-wrapper">
-            <img class="project-card__image" :src="project.image" :alt="t(project.altKey)" />
-          </div>
-
-          <div class="project-card__content">
-            <h2 class="project-card__title">
-              {{ t(project.titleKey) }}
-            </h2>
-
-            <p v-if="project.descriptionKey" class="project-card__description">
-              {{ t(project.descriptionKey) }}
-            </p>
-
-            <button class="project-card__button" type="button">
-              {{ t('actions.openCase') }}
-            </button>
-          </div>
-        </article>
+        <ProjectCard
+          v-for="project in projects"
+          :key="project.id"
+          :slug="project.slug"
+          :title-key="project.titleKey"
+          :description-key="project.descriptionKey"
+          :alt-key="project.altKey"
+          :image="project.image"
+        />
       </section>
     </div>
 
