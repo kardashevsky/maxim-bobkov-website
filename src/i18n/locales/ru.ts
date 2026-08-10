@@ -17,6 +17,7 @@ export default {
   actions: {
     openCase: 'Открыть кейс',
     scrollTop: 'Наверх',
+    backHome: 'На главную',
   },
 
   accessibility: {

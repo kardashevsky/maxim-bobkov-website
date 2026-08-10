@@ -17,6 +17,7 @@ export default {
   actions: {
     openCase: 'View case',
     scrollTop: 'Back to top',
+    backHome: 'Homepage',
   },
 
   accessibility: {

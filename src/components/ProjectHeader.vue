@@ -4,6 +4,10 @@ import { RouterLink } from 'vue-router'
 
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
+import cvIcon from '@/assets/icons/cv.svg'
+import telegramIcon from '@/assets/icons/telegram.svg'
+import mailIcon from '@/assets/icons/mail.svg'
+
 const { t } = useI18n()
 
 const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
@@ -11,13 +15,16 @@ const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
 
 <template>
   <header class="project-header">
-    <RouterLink class="project-header__home" :to="{ name: 'home' }">
-      {{ t('actions.backHome') }}
-    </RouterLink>
+    <div class="project-header__start">
+      <RouterLink class="project-header__home" :to="{ name: 'home' }">
+        {{ t('actions.backHome') }}
+      </RouterLink>
+    </div>
 
-    <nav class="project-header__contacts" :aria-label="t('accessibility.contacts')">
+    <nav class="project-header__center" :aria-label="t('accessibility.contacts')">
       <a class="project-header__contact" :href="cvUrl" target="_blank" rel="noopener noreferrer">
-        <span aria-hidden="true">▣</span>
+        <img class="project-header__contact-icon" :src="cvIcon" alt="" aria-hidden="true" />
+
         {{ t('contacts.cv') }}
       </a>
 
@@ -27,17 +34,21 @@ const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span aria-hidden="true">➤</span>
+        <img class="project-header__contact-icon" :src="telegramIcon" alt="" aria-hidden="true" />
+
         {{ t('contacts.telegram') }}
       </a>
 
       <a class="project-header__contact" href="mailto:maksim.you11@gmail.com">
-        <span aria-hidden="true">✉</span>
+        <img class="project-header__contact-icon" :src="mailIcon" alt="" aria-hidden="true" />
+
         {{ t('contacts.mail') }}
       </a>
     </nav>
 
-    <LanguageSwitcher />
+    <div class="project-header__end">
+      <LanguageSwitcher />
+    </div>
   </header>
 </template>
 
@@ -49,113 +60,135 @@ const cvUrl = `${import.meta.env.BASE_URL}maxim-bobkov-cv.pdf`
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
 
-  width: 100%;
-  min-height: 122px;
-  padding: 28px 60px;
+  width: min(calc(100% - 48px), 1320px);
+  height: 80px;
 
-  background: #ffffff;
-  border: 2px solid rgba(63, 63, 63, 0.2);
-  border-radius: 20px;
+  margin: 40px auto 0;
+  padding: 20px 40px;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  border: 1px solid #dae2de;
+  border-radius: 10px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.project-header__home {
-  justify-self: start;
+.project-header__start {
+  display: flex;
+  justify-content: flex-start;
+}
 
+.project-header__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+}
+
+.project-header__end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* На главную */
+
+.project-header__home {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  min-height: 62px;
-  padding: 10px 22px;
+  height: 40px;
+  padding: 10px 15px;
 
-  border: 2px solid #585858;
-  border-radius: 16px;
+  background: #ffffff;
+
+  border: 1px solid #585858;
+  border-radius: 10px;
 
   color: #585858;
   text-decoration: none;
 
-  font-size: 30px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 110%;
+
+  white-space: nowrap;
 }
 
-.project-header__contacts {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-}
+/* Контакты */
 
 .project-header__contact {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 
-  min-height: 62px;
-  padding: 10px 24px;
+  height: 40px;
+  padding: 10px 15px;
+  gap: 5px;
 
-  border-radius: 16px;
+  background: rgba(68, 108, 92, 0.2);
 
-  background: #dae2da;
+  border-radius: 10px;
+
   color: #4a4a4a;
   text-decoration: none;
 
-  font-size: 30px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 110%;
+
+  white-space: nowrap;
 }
 
-.project-header :deep(.language-switcher) {
-  justify-self: end;
+.project-header__contact-icon {
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 18px;
 }
 
-@media (max-width: 1200px) {
+/* Laptop */
+
+@media (max-width: 1100px) {
   .project-header {
-    grid-template-columns: auto 1fr auto;
-    gap: 24px;
-    padding-inline: 32px;
+    padding-inline: 24px;
   }
 
-  .project-header__contacts {
-    gap: 12px;
+  .project-header__center {
+    gap: 10px;
   }
 
-  .project-header__home,
   .project-header__contact {
-    min-height: 52px;
-    font-size: 22px;
+    padding-inline: 12px;
   }
 }
 
-@media (max-width: 900px) {
+/* Mobile */
+
+@media (max-width: 700px) {
   .project-header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    grid-template-columns: 1fr auto;
+
+    width: calc(100% - 32px);
+    height: auto;
+    min-height: 64px;
+
+    margin-top: 16px;
+    padding: 12px 16px;
   }
 
-  .project-header__contacts {
-    order: 3;
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .project-header {
-    padding: 20px;
-    border-radius: 16px;
-  }
-
-  .project-header__contacts {
+  .project-header__center {
     display: none;
   }
 
   .project-header__home {
-    min-height: 44px;
-    padding-inline: 16px;
-    border-radius: 12px;
-    font-size: 18px;
+    height: 36px;
+    padding: 8px 12px;
+
+    font-size: 16px;
   }
 }
 </style>
